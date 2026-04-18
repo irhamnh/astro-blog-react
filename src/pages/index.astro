@@ -1,75 +1,68 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/react/Header.tsx';
-import Footer from '../components/react/Footer.tsx';
+import { getCollection } from 'astro:content';
 import BlogCard from '../components/react/BlogCard.tsx';
 import ProjectCard from '../components/react/ProjectCard.tsx';
 import SectionHeading from '../components/react/SectionHeading.tsx';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import { blogPosts, projects } from '../data/posts.ts';
 import "../styles/global.css";
+import BaseLayout from '@/layouts/BaseLayout.astro';
 
-const recentPosts = blogPosts.slice(0, 3);
+const projects = (await getCollection('projects')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const recentPosts = posts.slice(0, 3);
 const featuredProjects = projects.slice(0, 3);
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
-  <body class="min-h-screen flex flex-col">
-    <Header client:idle pathname="/" />
-
-    <main class="flex-1">
-      <section class="container py-20 md:py-28">
-        <div class="max-w-2xl animate-fade-up">
-          <p class="text-sm font-medium text-primary tracking-widest uppercase mb-4">
-            Software Engineer & Writer
-          </p>
-          <h1 class="heading-display text-4xl md:text-5xl lg:text-6xl mb-6 leading-[1.15]">
-            Building things for the web, writing about the journey.
-          </h1>
-          <p class="text-lg text-muted-foreground leading-relaxed mb-8">
-            I'm John — a full-stack engineer focused on developer tools, design systems,
-            and distributed architectures. I share what I learn along the way.
-          </p>
-          <div class="flex gap-3">
-            <a
-              href="/blog"
-              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity"
-            >
-              Read the blog
-            </a>
-            <a
-              href="/projects"
-              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-secondary text-foreground font-medium text-sm hover:bg-secondary/80 transition-colors"
-            >
-              View projects
-            </a>
-          </div>
+<BaseLayout>
+  <main class="flex-1">
+    <section class="container py-20 md:py-28">
+      <div class="max-w-2xl animate-fade-up">
+        <p class="text-sm font-medium text-primary tracking-widest uppercase mb-4">
+          Software Engineer & Writer
+        </p>
+        <h1 class="heading-display text-4xl md:text-5xl lg:text-6xl mb-6 leading-[1.15]">
+          Building things for the web, writing about the journey.
+        </h1>
+        <p class="text-lg text-muted-foreground leading-relaxed mb-8">
+          I'm John — a full-stack engineer focused on developer tools, design systems,
+          and distributed architectures. I share what I learn along the way.
+        </p>
+        <div class="flex gap-3">
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity"
+          >
+            Read the blog
+          </a>
+          <a
+            href="/projects"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-secondary text-foreground font-medium text-sm hover:bg-secondary/80 transition-colors"
+          >
+            View projects
+          </a>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="container pb-20">
-        <SectionHeading client:idle title="Recent Posts" linkTo="/blog" />
-        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {recentPosts.map((post, i) => (
-            <BlogCard client:idle post={post} index={i} />
-          ))}
-        </div>
-      </section>
+    <section class="container pb-20">
+      <SectionHeading client:idle title="Recent Posts" linkTo="/blog" />
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {recentPosts.map((post, i) => (
+          <BlogCard client:idle post={post.data} id={post.id} index={i} />
+        ))}
+      </div>
+    </section>
 
-      <section class="container pb-20">
-        <SectionHeading client:idle title="Featured Projects" linkTo="/projects" />
-        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredProjects.map((project, i) => (
-            <ProjectCard client:idle project={project} index={i} />
-          ))}
-        </div>
-      </section>
-    </main>
-
-    <Footer client:idle />
-  </body>
-</html>
+    <section class="container pb-20">
+      <SectionHeading client:idle title="Featured Projects" linkTo="/projects" />
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {featuredProjects.map((project, i) => (
+          <ProjectCard client:idle project={project.data} id={project.id} index={i} />
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

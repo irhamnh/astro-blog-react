@@ -1,15 +1,16 @@
-// import { Link } from "react-router-dom";
-// import type { BlogPost } from "@/data/posts";
 import type { BlogPost } from "@/types";
 import { ArrowUpRight } from "lucide-react";
 
 interface BlogCardProps {
   post: BlogPost; // Replace with BlogPost type when available
   index?: number;
+  id: string;
 }
 
-const BlogCard = ({ post, index = 0 }: BlogCardProps) => {
-  const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
+const BlogCard = ({ post, id, index = 0 }: BlogCardProps) => {
+  const formattedDate = new Date(
+    post.updatedDate ?? post.pubDate,
+  ).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -17,7 +18,7 @@ const BlogCard = ({ post, index = 0 }: BlogCardProps) => {
 
   return (
     <a
-      href={`/blog/${post.slug}`}
+      href={`/blog/${id}`}
       className="group card-elevated rounded-xl bg-card p-6 flex flex-col justify-between animate-fade-up"
       style={{ animationDelay: `${index * 80}ms` }}
     >
@@ -27,7 +28,7 @@ const BlogCard = ({ post, index = 0 }: BlogCardProps) => {
           <span className="w-1 h-1 rounded-full bg-muted-foreground/40" />
           <span>{post.readTime}</span>
         </div>
-        <h3 className="heading-display text-lg mb-2 group-hover:text-blue-500 transition-colors leading-snug">
+        <h3 className="heading-display text-lg mb-2 group-hover:text-primary transition-colors leading-snug">
           {post.title}
         </h3>
         <p className="text-sm text-muted-foreground leading-relaxed mb-4">

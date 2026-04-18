@@ -1,0 +1,19 @@
+---
+import BaseHead from "@/components/BaseHead.astro"
+import Footer from "@/components/react/Footer"
+import Header from "@/components/react/Header"
+const {title, description} = Astro.props;
+const {pathname} = Astro.url;
+
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header client:load pathname={pathname} />
+    <slot></slot>
+    <Footer client:idle />
+  </body>
+</html>

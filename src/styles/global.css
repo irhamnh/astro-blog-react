@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap");
 
 @import "tailwindcss";
-@custom-variant group-hover (&:is(:where(.group):hover *));
 
 @theme {
   --color-background: hsl(40 33% 97%);
@@ -81,10 +80,11 @@ h4 {
 
 .heading-display {
   font-family: var(--font-heading);
-  color: var(--color-foreground);
+  /* color: var(--color-foreground); */
   font-weight: 700;
   letter-spacing: -0.025em;
 }
+
 .card-elevated {
   box-shadow: var(--shadow-card);
   transition:
@@ -114,6 +114,10 @@ h4 {
   background-color: var(--color-primary);
   color: var(--color-primary-foreground);
 }
+.tag-pill[data-active="true"] {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+}
 .animate-fade-up {
   animation: fadeUp 0.5s ease-out both;
 }
@@ -126,4 +130,45 @@ h4 {
   @media (min-width: 1400px) {
     max-width: 1400px;
   }
+}
+
+.project-detail h2,
+.blog-post h2 {
+  @apply text-xl md:text-2xl mt-10 mb-4;
+}
+
+.project-detail h3,
+.blog-post h3 {
+  @apply text-lg md:text-xl mt-8 mb-3;
+}
+
+.project-detail ol,
+.project-detail ul,
+.blog-post ol,
+.blog-post ul {
+  @apply list-disc list-inside space-y-1.5 text-muted-foreground leading-relaxed mb-4 ml-1;
+}
+
+.project-detail ol span,
+.project-detail ul span,
+.blog-post ol span,
+.blog-post ul span {
+  @apply text-foreground;
+}
+
+.project-detail ol p,
+.project-detail ul p,
+.blog-post ol p,
+.blog-post ul p {
+  @apply inline;
+}
+
+.project-detail strong,
+.blog-post strong {
+  @apply font-semibold text-foreground;
+}
+
+.project-detail p,
+.blog-post p {
+  @apply text-muted-foreground leading-relaxed mb-4 text-base;
 }

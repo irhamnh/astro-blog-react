@@ -1,0 +1,41 @@
+---
+// import ProjectCard from "@/components/react/ProjectCard";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import ProjectList from './_ProjectList.tsx';
+import { ArrowLeft } from "lucide-react";
+
+const projects = (await getCollection('projects')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const tags = (await getCollection('projects'))
+  .reduce((acc: string[], project) => { 
+    project.data.tags.forEach((tag) => {
+      if (!acc.includes(tag)) {
+        acc.push(tag);
+      }
+    });
+    return acc;
+  }, ['All'])
+  .sort();
+---
+<BaseLayout description="A collection of tools, libraries, and experiments I've built.">
+  <main class="flex-1 container py-16">
+    <a
+      href="/"
+      class="animate-fade-up inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+    >
+      <ArrowLeft className="w-4 h-4" />
+      Back to home
+    </a>
+    <div class="max-w-2xl mb-10 animate-fade-up">
+      <h1 class="heading-display text-3xl md:text-4xl mb-3">Projects</h1>
+      <p class="text-muted-foreground">
+        A collection of tools, libraries, and experiments I've built.
+      </p>
+    </div>
+
+    <ProjectList projects={projects} tags={tags} client:visible/>
+  </main>
+</BaseLayout>

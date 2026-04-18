@@ -1,4 +1,4 @@
-// import { Link, useLocation } from "react-router-dom";
+import { useCallback } from "react";
 
 const navItems = [
   { label: "Home", path: "/" },
@@ -12,6 +12,19 @@ interface HeaderProps {
 
 const Header = (props: HeaderProps) => {
   const { pathname } = props;
+
+  const isActive = useCallback(
+    (pathname: string, itemPath: string) => {
+      if (pathname === "/" && itemPath === "/") {
+        return true;
+      }
+      if (pathname !== "/") {
+        return itemPath.startsWith(pathname);
+      }
+      return false;
+    },
+    [pathname],
+  );
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
@@ -28,7 +41,7 @@ const Header = (props: HeaderProps) => {
               key={item.path}
               href={item.path}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                pathname === item.path
+                isActive(pathname, item.path)
                   ? "bg-primary text-primary-foreground"
                   : "text-muted-foreground hover:text-foreground hover:bg-secondary"
               }`}

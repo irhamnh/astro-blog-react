@@ -1,23 +1,19 @@
 export interface BlogPost {
-  id: string;
   title: string;
   excerpt: string;
-  date: string;
+  pubDate: Date;
+  updatedDate?: Date;
   tags: string[];
   readTime: string;
-  slug: string;
-  content: string;
-  headerImage?: string;
+  heroImage?: ImageMetadata;
 }
 
 export interface Project {
-  id: string;
   title: string;
   description: string;
   tags: string[];
   link: string;
-  image?: string;
-  slug: string;
-  date: string;
-  fullDescription: string;
+  repoLink: string;
+  pubDate: Date;
+  updatedDate?: Date;
 }

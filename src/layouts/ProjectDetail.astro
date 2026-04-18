@@ -1,0 +1,73 @@
+---
+import BaseHead from "@/components/BaseHead.astro";
+import Footer from "@/components/react/Footer.tsx";
+import Header from "@/components/react/Header.tsx";
+import type { CollectionEntry } from 'astro:content';
+import { ArrowLeft, ExternalLink } from "lucide-react";
+import '@/styles/global.css';
+import FormattedDate from "@/components/FormattedDate.astro";
+
+const { pathname } = Astro.url;
+type Props = CollectionEntry<'projects'>['data'];
+const { title, description, tags = [], link, pubDate, updatedDate, repoLink } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header client:load pathname={pathname} />
+    <main class="project-detail flex-1 container max-w-3xl py-16 animate-fade-up">
+      <a
+        href="/projects"
+        class="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back to projects
+      </a>
+
+      <div class="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+        <FormattedDate date={pubDate} />
+        {updatedDate && (
+          <>
+            <span>•</span>
+            <FormattedDate date={updatedDate} />
+          </>
+        )}
+      </div>
+
+      <h1 class="heading-display text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight">
+        {title}
+      </h1>
+
+      <p class="text-lg text-muted-foreground mb-6">{description}</p>
+
+      <div class="flex flex-wrap items-center gap-2 mb-4">
+        {tags.length > 0 && tags.map((tag) => (
+          <a href={`/tag/${encodeURIComponent(tag)}`}>
+            <span class="tag-pill">{tag}</span>
+          </a>
+        ))}
+        
+      </div>
+      <div class="flex flex-wrap items-center gap-2 mb-10">
+        <a
+          href={link}
+          class="inline-flex items-center gap-1.5 ml-2 text-sm font-medium text-primary hover:underline underline-offset-4"
+        >
+          View project <ExternalLink className="w-3.5 h-3.5" />
+        </a>
+        <a
+          href={repoLink}
+          class="inline-flex items-center gap-1.5 ml-2 text-sm font-medium text-primary hover:underline underline-offset-4"
+        >
+          View in github <ExternalLink className="w-3.5 h-3.5" />
+        </a>
+      </div>
+      <slot></slot>
+    </main>
+    <Footer client:idle />
+  </body>
+</html>

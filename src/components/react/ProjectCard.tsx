@@ -4,11 +4,12 @@ import { ExternalLink } from "lucide-react";
 interface ProjectCardProps {
   project: Project; // Replace with Project type when available
   index?: number;
+  id: string;
 }
 
-const ProjectCard = ({ project, index = 0 }: ProjectCardProps) => (
+const ProjectCard = ({ project, id, index = 0 }: ProjectCardProps) => (
   <a
-    href={`/projects/${project.slug}`}
+    href={`/projects/${id}`}
     className="group card-elevated rounded-xl bg-card p-6 flex flex-col justify-between animate-fade-up"
     style={{ animationDelay: `${index * 80}ms` }}
   >
