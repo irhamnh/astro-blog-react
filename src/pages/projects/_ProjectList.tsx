@@ -20,12 +20,12 @@ export default function ProjectList({ tags, projects }: Props) {
   return (
     <>
       <div className="flex flex-wrap gap-2 mb-8 items-center">
-        {tags.map((tag) => (
+        {tags.map((tag, index) => (
           <button
             className="tag-pill"
             data-active={selectedTag.includes(tag) ? "true" : "false"}
             type="button"
-            key={tag}
+            key={index}
             onClick={() => {
               // reset filter if All tag is clicked
               if (tag === "All") {
@@ -57,6 +57,7 @@ export default function ProjectList({ tags, projects }: Props) {
               project={project.data}
               id={project.id}
               index={index}
+              key={index}
             />
           ))
         ) : (
