@@ -1,0 +1,21 @@
+---
+title: "Case Study: Handling high-frequency data updates."
+description: "Exploring strategies to manage high-frequency data updates in a React application."
+pubDate: "April 20, 2026"
+link: "/"
+repoLink: "/"
+tags: ["React", "Web Development"]
+---
+
+## The Performance Bottleneck
+
+In most cases for a React Application, the usual method of handling data updates and rerender is sufficient. However,
+when dealing with high-frequency data updates (e.g., 1,000 updates per second), the traditional approach of using `setState` to trigger re-renders becomes a significant performance bottleneck.
+
+As data frequency increases, React's "state-per-update" (re-rendering every time data changes) becomes a major bottleneck for the Main Thread,
+causing high CPU usage, UI jank, and sluggish responsiveness. The overhead of constant reconciliation and virtual DOM diffing at high frequency exceeds browser performance limits.
+
+An example of this scenario is a real-time dashboard that receives a stream of data points (e.g., stock prices, sensor readings) at a high rate.
+he UI becomes unresponsive as the Main Thread is overwhelmed with processing updates, leading to "dropped frames" and a poor user experience.
+
+## The solution

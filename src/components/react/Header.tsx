@@ -33,7 +33,7 @@ const Header = (props: HeaderProps) => {
           href="/"
           className="font-heading text-xl font-bold text-foreground tracking-tight hover:text-primary transition-colors"
         >
-          jd<span className="text-primary">.</span>
+          inh<span className="text-primary">.</span>
         </a>
         <nav className="flex items-center gap-1">
           {navItems.map((item) => (
