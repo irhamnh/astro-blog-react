@@ -53,6 +53,11 @@ const featuredProjects = projects.slice(0, 3);
         {recentPosts.map((post, i) => (
           <BlogCard client:idle post={post.data} id={post.id} index={i} />
         ))}
+        {recentPosts.length === 0 && (
+          <p class="text-center text-muted-foreground col-span-full">
+            No posts to show yet. Check back later!
+          </p>
+        )}
       </div>
     </section>
 
@@ -62,6 +67,11 @@ const featuredProjects = projects.slice(0, 3);
         {featuredProjects.map((project, i) => (
           <ProjectCard client:idle project={project.data} id={project.id} index={i} />
         ))}
+        {featuredProjects.length === 0 && (
+          <p class="text-center text-muted-foreground col-span-full">
+            No projects to show yet. Check back later!
+          </p>
+        )}
       </div>
     </section>
   </main>
