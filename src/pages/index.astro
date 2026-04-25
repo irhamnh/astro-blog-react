@@ -48,7 +48,7 @@ const featuredProjects = projects.slice(0, 3);
     </section>
 
     <section class="container pb-20">
-      <SectionHeading client:idle title="Recent Posts" linkTo="/blog" />
+      <SectionHeading client:idle title="Recent Posts" linkTo="/blog" ariaLabel="View all blog posts" linkLabel='View all blog posts' />
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {recentPosts.map((post, i) => (
           <BlogCard client:idle post={post.data} id={post.id} index={i} />
@@ -62,7 +62,7 @@ const featuredProjects = projects.slice(0, 3);
     </section>
 
     <section class="container pb-20">
-      <SectionHeading client:idle title="Featured Projects" linkTo="/projects" />
+      <SectionHeading client:idle title="Featured Projects" linkTo="/projects" ariaLabel="View all projects" linkLabel='View all projects' />
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {featuredProjects.map((project, i) => (
           <ProjectCard client:idle project={project.data} id={project.id} index={i} />
